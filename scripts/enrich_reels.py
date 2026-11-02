@@ -1,0 +1,475 @@
+import json
+import os
+import datetime
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE = os.path.join(BASE_DIR, "reels.json")
+
+enriched_data = [
+  {
+    "id": "reel_001",
+    "shortcode": "DbH3L50RaBS",
+    "title": "The Interview Cheat Code: Guess the Algorithm from Input Constraints",
+    "url": "https://www.instagram.com/reel/DbH3L50RaBS/",
+    "creator": "swe",
+    "category": "dsa",
+    "takeaways": [
+      "Input size (N) in LeetCode/interviews directly dictates the required Big-O time complexity.",
+      "If N <= 10: O(N!) or O(N^6) - Permutations / brute force recursion.",
+      "If N <= 20-25: O(2^N) - Subsets, backtracking, bitmask DP.",
+      "If N <= 500: O(N^3) - Floyd-Warshall, 3-nested loops, cubic matrix multiplication.",
+      "If N <= 2,000-5,000: O(N^2) - 2D Dynamic Programming, nested loops.",
+      "If N <= 10^5 to 10^6: O(N log N) or O(N) - Sorting, Two Pointers, Sliding Window, Monotonic Stack, Binary Search.",
+      "If N >= 10^9: O(log N) or O(1) - Binary Search, Math / Bit manipulation.",
+      "If constraints aren't given in the interview, ASK! Asking narrows down the entire algorithm family."
+    ],
+    "code_snippet": """# Time Complexity Rule of Thumb (~10^7 - 10^8 ops/sec)
+# N <= 20       -> O(2^N) or O(N!)      [Backtracking, Bitmask DP]
+# N <= 5,000    -> O(N^2)               [2D DP, Nested Loops]
+# N <= 200,000  -> O(N log N) or O(N)   [Sorting, Heaps, Two Pointers]
+# N >= 10^9     -> O(log N) or O(1)     [Binary Search, Math]""",
+    "language": "python",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_002",
+    "shortcode": "DbrYFZDqPSS",
+    "title": "45-Day Structured DSA Master Roadmap",
+    "url": "https://www.instagram.com/reel/DbrYFZDqPSS/",
+    "creator": "swe",
+    "category": "dsa",
+    "takeaways": [
+      "Most candidates fail coding interviews due to lack of a structured pattern-based plan rather than lack of intelligence.",
+      "Phase 1 (Days 1-10): Arrays, Hashing, Two Pointers, Sliding Window (Master linear time problem patterns).",
+      "Phase 2 (Days 11-20): Linked Lists, Stacks (Monotonic Stack), Binary Search variants.",
+      "Phase 3 (Days 21-32): Trees (DFS/BFS traversal, LCA), Tries, Heaps / Priority Queues.",
+      "Phase 4 (Days 33-40): Graphs (Dijkstra, Topological Sort, Union Find / Disjoint Set Union).",
+      "Phase 5 (Days 41-45): Dynamic Programming (1D, 2D grid, Knapsack variations) + Mock Interviews."
+    ],
+    "code_snippet": """# 45-Day DSA Sprint Progression:
+# Phase 1 (Days 1-10): Arrays -> Two Pointers -> Sliding Window
+# Phase 2 (Days 11-20): Stack/Monotonic Stack -> Binary Search
+# Phase 3 (Days 21-32): Binary Trees -> BST -> Heaps / Priority Queues
+# Phase 4 (Days 33-40): Graphs (BFS/DFS, Topological Sort, Union-Find)
+# Phase 5 (Days 41-45): Dynamic Programming + Mock Interviews""",
+    "language": "python",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_003",
+    "shortcode": "Dd8EJmMGjDp",
+    "title": "The 5 High-Yield GitHub Repos You Should Actually Bookmark",
+    "url": "https://www.instagram.com/reel/Dd8EJmMGjDp/",
+    "creator": "techresources",
+    "category": "dsa",
+    "takeaways": [
+      "Stop hoarding random repositories; bookmark authoritative repos aligned with specific goals.",
+      "AI & LLMs: `openai/openai-cookbook` - Practical recipes and production patterns for LLM integration.",
+      "DSA Patterns: `AlgoVault` / `kdn251/interviews` - Core algorithm implementations and visual breakdowns.",
+      "System Design: `donnemartin/system-design-primer` - The gold standard for scalable architecture, caching, databases, and trade-offs.",
+      "Interview Prep: `jwasham/coding-interview-university` - Complete multi-month computer science study plan.",
+      "Practical Projects: `practical-tutorials/project-based-learning` - Build real-world tools from scratch in any language."
+    ],
+    "code_snippet": """# Top 5 Developer Resource Repositories:
+# 1. AI Engineering:       https://github.com/openai/openai-cookbook
+# 2. System Design Primer: https://github.com/donnemartin/system-design-primer
+# 3. Coding Interview Uni: https://github.com/jwasham/coding-interview-university
+# 4. Project-Based Learn:  https://github.com/practical-tutorials/project-based-learning
+# 5. Build Your Own X:     https://github.com/codecrafters-io/build-your-own-x""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_004",
+    "shortcode": "DcLEFvBzsYe",
+    "title": "Practical Architecture: Scaling to 1 Million Requests Per Second (1M RPS)",
+    "url": "https://www.instagram.com/reel/DcLEFvBzsYe/",
+    "creator": "systemdesign",
+    "category": "system-design",
+    "takeaways": [
+      "1M RPS cannot be achieved with traditional thread-per-request models (Apache/pre-fork) due to context-switching overhead (C10K/C1000K problem).",
+      "Key Building Block 1: Event-driven non-blocking I/O using OS primitives like Linux `epoll` or FreeBSD `kqueue`.",
+      "Key Building Block 2: Zero-copy networking (e.g. `sendfile` syscall) to bypass copying buffers between kernel space and user space.",
+      "Key Building Block 3: Kernel bypass & TCP connection pooling (keep-alive, socket reuse) to prevent socket exhaustion (TIME_WAIT states).",
+      "Key Building Block 4: Multi-tier caching with Redis Cluster / local in-memory LRU caches to avoid touching disk or primary databases."
+    ],
+    "code_snippet": """# Core Architecture for 1M RPS:
+# Client -> Anycast DNS / Cloudflare -> Layer 4 Load Balancer (DPDK/Maglev)
+#        -> Layer 7 Reverse Proxy (Nginx/Envoy with epoll event loop)
+#        -> In-Memory Shared Cache (Local RAM / Redis sharded cluster)
+#        -> Async Worker Service (Go / Rust / Node.js non-blocking I/O)
+#        -> Append-Only Event Stream (Kafka / Redpanda)""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_005",
+    "shortcode": "DeMIa62lCRt",
+    "title": "Top 25 High Level Design (HLD) Interview Questions",
+    "url": "https://www.instagram.com/reel/DeMIa62lCRt/",
+    "creator": "hld_interviews",
+    "category": "system-design",
+    "takeaways": [
+      "Top 25 real-world HLD questions frequently tested in FAANG/product engineering interviews:",
+      "1. URL Shortener (TinyURL) - Base62 encoding, distributed ID generation (Snowflake), read-heavy caching.",
+      "2. Video Streaming Service (YouTube/Netflix) - Transcoding pipeline, CDN edge points, adaptive bitrate streaming (HLS/DASH).",
+      "3. Ride-Sharing Dispatch (Uber/Lyft) - Geospatial indexing (H3, Google S2, QuadTrees), WebSockets for real-time driver coordinates.",
+      "4. Distributed Rate Limiter - Token Bucket, Leaky Bucket, Sliding Window Counter with Redis Lua scripts.",
+      "5. Real-Time Chat System (WhatsApp/Telegram) - Persistent WebSockets, message queues (Kafka), end-to-end encryption architecture.",
+      "6. Distributed Unique ID Generator - Twitter Snowflake 64-bit structure (timestamp + datacenter ID + sequence).",
+      "7. Distributed Caching System - Consistent hashing, LRU eviction, cache invalidation strategies (write-through, cache-aside)."
+    ],
+    "code_snippet": """# Essential HLD Evaluation Blueprint:
+# 1. Scope & Requirements: Functional vs Non-Functional (CAP Theorem, Latency, RPS)
+# 2. Back-of-the-Envelope Estimation: Read/Write throughput, Storage over 5 yrs
+# 3. High Level Diagram: API Gateway -> Microservices -> Cache -> DB Cluster
+# 4. Deep Dives: Partitioning / Sharding, Replication, Consistency vs Availability
+# 5. Bottlenecks & Failure Modes: Single Points of Failure (SPOF), Circuit Breakers""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_006",
+    "shortcode": "DdBqHMnTkwu",
+    "title": "The 28-Chapter System Design Mastery Blueprint",
+    "url": "https://www.instagram.com/reel/DdBqHMnTkwu/",
+    "creator": "techinterview",
+    "category": "system-design",
+    "takeaways": [
+      "Foundations: Vertical vs Horizontal scaling, Load Balancers, Proxies vs Reverse Proxies.",
+      "Data Tier: Relational (ACID) vs NoSQL (BASE), Indexing (B-Tree vs LSM-Tree), Read Replicas & Database Sharding.",
+      "Caching & Consistency: Cache-Aside, Write-Through, Write-Behind, Cache Eviction (LRU/LFU), Distributed Locks (Redlock).",
+      "Communication Protocols: REST vs gRPC (Protocol Buffers) vs WebSockets vs Long Polling.",
+      "Distributed Coordination: Consistent Hashing, Vector Clocks, Consensus Algorithms (Raft, Paxos), Message Brokers (Kafka vs RabbitMQ)."
+    ],
+    "code_snippet": """# System Design 4-Stage Hierarchy:
+# Tier 1: Fundamentals (Load Balancing, Reverse Proxy, Caching, Sharding)
+# Tier 2: Storage Engines (B+ Trees for reads, LSM Trees for writes, Columnar DBs)
+# Tier 3: Async Communication (Event-driven architectures, Idempotency, Kafka)
+# Tier 4: Reliability (Circuit breakers, Rate limiters, Distributed Tracing)""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_007",
+    "shortcode": "DdZQXgeTv22",
+    "title": "Backend + AI Engineering: 5 Core Concepts Every SWE Must Explain",
+    "url": "https://www.instagram.com/reel/DdZQXgeTv22/",
+    "creator": "swe",
+    "category": "system-design",
+    "takeaways": [
+      "Vector Embeddings & Vector Databases: How high-dimensional float vectors are indexed using HNSW (Hierarchical Navigable Small World) for nearest neighbor search.",
+      "RAG Architecture (Retrieval Augmented Generation): Ingestion pipeline -> Chunking -> Embedding -> Vector DB -> Context Injection into LLM prompt.",
+      "Latency & Streaming in AI Backends: Server-Sent Events (SSE) vs WebSockets for streaming token responses.",
+      "Database Concurrency Control: Optimistic Locking (version column) vs Pessimistic Locking (SELECT ... FOR UPDATE) to prevent double-spending/race conditions.",
+      "Connection Pooling & Connection Starvation: Why unmanaged database connections crash backends under load."
+    ],
+    "code_snippet": """# RAG Pipeline Flow:
+# 1. Document -> Recursive Character Chunking (chunk_size=500, overlap=50)
+# 2. Text Chunks -> Embedding Model (e.g. text-embedding-3-small) -> Vectors
+# 3. Query -> Query Vector -> HNSW Cosine Similarity Top-K Match in Vector DB
+# 4. Prompt = User Query + Context Chunks -> LLM -> Streaming Response (SSE)""",
+    "language": "python",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_008",
+    "shortcode": "DeJGJBkGsC_",
+    "title": "5 Websites to Level Up Engineering Beyond LeetCode",
+    "url": "https://www.instagram.com/reel/DeJGJBkGsC_/",
+    "creator": "developerresources",
+    "category": "clean-code",
+    "takeaways": [
+      "LeetCode teaches problem-solving in a vacuum; engineering requires writing maintainable, idiomatic production software.",
+      "1. Exercism (exercism.org): Real human code reviews to master language idioms and clean code principles.",
+      "2. Build Your Own X (github.com/codecrafters-io/build-your-own-x): Step-by-step guides to build your own Git, Docker, Database, or Redis from scratch.",
+      "3. VisuAlgo (visualgo.net): Dynamic visualization of graph algorithms, recursion trees, and sorting mechanics.",
+      "4. Archtin: Unified engineering tracks spanning DSA, Low Level Design (LLD), High Level Design (HLD), and AI.",
+      "5. Codewars: Compare your solutions against the most elegant, refactored community solutions."
+    ],
+    "code_snippet": """# High-Yield Platforms for Deep Engineering:
+# - Idiomatic Code & Mentorship: https://exercism.org
+# - Build Systems from Scratch:  https://github.com/codecrafters-io/build-your-own-x
+# - Algorithm Visualizer:        https://visualgo.net
+# - System Architecture:         https://archtin.com""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_009",
+    "shortcode": "DYM-AdnTL7J",
+    "title": "Spec-Driven AI Coding: The End of Vibe-Coding Drift",
+    "url": "https://www.instagram.com/reel/DYM-AdnTL7J/",
+    "creator": "github",
+    "category": "clean-code",
+    "takeaways": [
+      "The 'prompt-and-pray' / vibe-coding approach produces brittle code because AI context drifts over time.",
+      "Spec-Driven Development treats the specification (`spec.md` or PRD) as an immutable contract between developer and AI.",
+      "Workflow: 1. Generate comprehensive architecture specification first. 2. Define data schemas and API contracts. 3. Have the AI build step-by-step against the spec.",
+      "Eliminates hallucinated requirements, keeps multi-file changes tightly coordinated, and guarantees reproducible codebases."
+    ],
+    "code_snippet": """# Spec-Driven Development (SDD) Workflow:
+# Step 1: Write requirements & constraints in SPEC.md
+# Step 2: Have LLM plan task decomposition (task.md)
+# Step 3: Implement unit tests against the spec contract
+# Step 4: AI writes implementation to satisfy tests & spec
+# Result: 0% context drift, high deterministic quality""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_010",
+    "shortcode": "DdEkZvozGs6",
+    "title": "The Claude Council: Multi-Agent Anonymous Peer Review Pattern",
+    "url": "https://www.instagram.com/reel/DdEkZvozGs6/",
+    "creator": "ritikgupta.ai",
+    "category": "clean-code",
+    "takeaways": [
+      "Single-LLM sycophancy trap: An LLM will flatter whatever perspective you frame in your prompt.",
+      "The Claude Council pattern solves this: Run 5 AI personas attacking the problem from opposing perspectives (Architect, Security, Skeptic, User Advocate, CFO).",
+      "Phase 1: Personas generate blind assessments without seeing other answers.",
+      "Phase 2: Personas peer-review the other proposals anonymously.",
+      "Phase 3: The Chairman agent synthesizes the debate into one single verdict and actionable next steps."
+    ],
+    "code_snippet": """# Multi-Agent Council Prompt Architecture:
+# Agent 1 (Security & Risk): What vulnerabilities or worst-case scenarios exist?
+# Agent 2 (Performance & Scale): How does this break under high concurrency?
+# Agent 3 (Pragmatic Minimalist): What is the simplest, lowest-maintenance solution?
+# Agent 4 (Devil's Advocate): Why is this idea fundamentally flawed?
+# Agent 5 (Chairman): Synthesize all 4 inputs into a decisive trade-off matrix.""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_011",
+    "shortcode": "DeeXcLkz4ab",
+    "title": "Modern Backend Engineering Roadmap",
+    "url": "https://www.instagram.com/reel/DeeXcLkz4ab/",
+    "creator": "backenddev",
+    "category": "web-dev",
+    "takeaways": [
+      "Core Language & Runtime: TypeScript (Node/Bun), Python (FastAPI), Go, or Rust.",
+      "API Design Standards: RESTful principles, OpenAPI/Swagger specifications, GraphQL for flexible payloads, gRPC for internal service-to-service communication.",
+      "Database Mastery: PostgreSQL relational indexing (B-Tree, GIN, GiST), Redis for cache and pub/sub, MongoDB or Cassandra for distributed schemaless stores.",
+      "Authentication & Security: OAuth2.0, OpenID Connect, JWT with short-lived access tokens + secure httpOnly refresh tokens, rate limiting, CORS.",
+      "DevOps & Observability: Docker containerization, Kubernetes orchestration, Prometheus metrics, Grafana dashboards, OpenTelemetry distributed tracing."
+    ],
+    "code_snippet": """# Backend Dev Progression:
+# 1. API & Protocols: REST, gRPC, WebSockets, HTTP/2 & HTTP/3
+# 2. Persistence: PostgreSQL (ACID, Indexes, Transactions), Redis (Cache, Sessions)
+# 3. Message Queues: RabbitMQ, Apache Kafka, Celery / Asynchronous Workers
+# 4. Security: JWT (httpOnly cookie), RBAC, Helmet, Rate Limiting, OWASP Top 10
+# 5. Cloud & Ops: Docker, CI/CD Actions, OpenTelemetry, AWS/GCP essentials""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_012",
+    "shortcode": "DePG1FFTXJE",
+    "title": "UI Design Vocabulary: Precision Prompts for Frontend Generation",
+    "url": "https://www.instagram.com/reel/DePG1FFTXJE/",
+    "creator": "startuptips",
+    "category": "web-dev",
+    "takeaways": [
+      "Vague prompting ('build a nice modern landing page') produces generic AI slop.",
+      "Use exact design system keywords in prompts to achieve targeted aesthetic styles:",
+      "- Bento Grid Layout: Modular cards with varying aspect ratios, subtle borders, high information density (Apple/Linear style).",
+      "- Neo-Brutalism: Bold high-contrast black borders (2-3px), vibrant primary colors, hard drop shadows with 0 blur, monospaced typography.",
+      "- Glassmorphism: `backdrop-filter: blur(12px)`, translucent background rgba, subtle 1px white border gradient.",
+      "- Minimalist Swiss / Linear Style: Strict typographic hierarchy, generous white space, subtle 1px gray borders, muted dark mode (#0A0A0A base)."
+    ],
+    "code_snippet": """/* CSS Keywords to inject into LLM Frontend Prompts */
+/* 1. Bento Grid: */
+.bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+/* 2. Neo-Brutalism: */
+.neo-card { border: 3px solid #000; box-shadow: 4px 4px 0px #000; background: #FFF; }
+/* 3. Glassmorphism: */
+.glass { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); }""",
+    "language": "css",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_013",
+    "shortcode": "Ddhl5TzynaO",
+    "title": "Anti-AI-Slop: Rules to Keep Generated Web UIs Looking Human-Crafted",
+    "url": "https://www.instagram.com/reel/Ddhl5TzynaO/",
+    "creator": "vibecoding",
+    "category": "web-dev",
+    "takeaways": [
+      "Hallmarks of AI slop: Purple-indigo gradients everywhere, overused rocket/sparkle emojis, generic centered hero sections with zero depth.",
+      "Rule 1: Specify a custom curated color palette (e.g. Zinc-900, Slate-50, with a single high-contrast accent like emerald-500 or amber-500).",
+      "Rule 2: Dictate font pairing (e.g. 'Geist Sans' for headings, 'JetBrains Mono' for numbers/code).",
+      "Rule 3: Enforce real interactive micro-states: `:hover`, `:active`, `:focus-visible`, and smooth transitions (`transition-all duration-200`).",
+      "Rule 4: Insist on responsive mobile-first grid layouts with explicit padding boundaries."
+    ],
+    "code_snippet": """# Prompt Injection to Kill AI Slop:
+"Avoid purple/indigo gradients and generic centered hero cards.
+Use a clean dark theme (#09090b zinc base) with crisp 1px borders (#27272a).
+Typography: Modern grotesque sans for headings, monospace for badges/stats.
+Add subtle hover scale micro-interactions (scale-102 transition-all).
+Ensure asymmetric bento layout with high visual hierarchy." """,
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_014",
+    "shortcode": "DdPp61PvcJ2",
+    "title": "The Claude AI Developer Master Track: Chat, Cowork & Claude Code CLI",
+    "url": "https://www.instagram.com/reel/DdPp61PvcJ2/",
+    "creator": "claudeai",
+    "category": "tools-workflow",
+    "takeaways": [
+      "Module 1 - Claude Chat (Prompt Engineering & Reasoning): Thinking tokens, structured artifacts, few-shot conditioning, and chain-of-thought system prompts.",
+      "Module 2 - Claude Workflows & Integrations: Connecting model tools via Model Context Protocol (MCP) to databases, GitHub, and external REST APIs.",
+      "Module 3 - Claude Code CLI / Agentic Execution: Terminal-based autonomous coding, running unit tests, fixing git diffs, and deploying production code without leaving bash."
+    ],
+    "code_snippet": """# Claude Code CLI Rapid Setup & Execution:
+# 1. Install globally
+npm install -g @anthropic-ai/claude-code
+
+# 2. Run inside any repository
+claude
+
+# 3. Direct agentic task execution:
+claude -p "Audit repo for security vulnerabilities and add unit tests for /api" """,
+    "language": "bash",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_015",
+    "shortcode": "DehMUh_jdbK",
+    "title": "111 Curated Developer Prompts for LLM Pair Programming",
+    "url": "https://www.instagram.com/reel/DehMUh_jdbK/",
+    "creator": "claudeprompts",
+    "category": "tools-workflow",
+    "takeaways": [
+      "Top system prompt constraints to force LLMs to output clean production code:",
+      "1. 'Do not remove comments or omit code with // ... rest of code. Output complete drop-in files.'",
+      "2. 'Before writing code, outline the edge cases: nil/null pointer, empty array, concurrent writes, buffer overflow.'",
+      "3. 'Write defensive parsers with try/catch fallbacks from version 1.'",
+      "4. 'Prefer pure functions with zero side-effects where possible.'",
+      "5. 'Include TypeScript strict types and Zod schemas for all external API boundaries.'"
+    ],
+    "code_snippet": """# Universal Pair-Programming System Prompt:
+You are an expert senior software engineer.
+1. Provide complete drop-in code without truncation or placeholders.
+2. Outline edge cases (empty states, network failures, overflow) before coding.
+3. Write clean unit tests using pytest or vitest for every new module.
+4. Keep functions small, pure, and single-purpose (SOLID principles).""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_016",
+    "shortcode": "DeJpnOEoKh_",
+    "title": "7 Foundational Videos to Master AI Engineering from Scratch",
+    "url": "https://www.instagram.com/reel/DeJpnOEoKh_/",
+    "creator": "aiengineering",
+    "category": "tools-workflow",
+    "takeaways": [
+      "Video 1: Andrej Karpathy's 'Neural Networks: Zero to Hero' (Building micrograd & backpropagation from scratch).",
+      "Video 2: 3Blue1Brown's 'How Deep Neural Networks Learn' (Visual intuition for gradient descent and loss landscapes).",
+      "Video 3: Karpathy's 'Let's build GPT: from scratch, in code, spelled out' (Transformer architecture, Self-Attention, Multi-head attention).",
+      "Video 4: Jay Alammar's 'The Illustrated Transformer & Illustrated Stable Diffusion'.",
+      "Video 5: Fine-tuning & LoRA (Low-Rank Adaptation) mechanics explained.",
+      "Video 6: RAG from scratch: Vector indexing, chunking trade-offs, re-ranking algorithms.",
+      "Video 7: Autonomous AI Agents: Function calling, ReAct prompting framework, and stateful memory loops."
+    ],
+    "code_snippet": """# Essential AI Engineering Self-Taught Curriculum:
+# 1. Backprop & Tensors: Andrej Karpathy (micrograd)
+# 2. Math & Visuals:     3Blue1Brown (Neural Networks series)
+# 3. Transformers:       Karpathy "Let's build GPT from scratch"
+# 4. Agent Loops:        ReAct (Reason + Act) & Tool Use Architecture""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_017",
+    "shortcode": "DeEzSWnidTy",
+    "title": "Autonomous AI Web Builders & Agentic Workflows",
+    "url": "https://www.instagram.com/reel/DeEzSWnidTy/",
+    "creator": "manuspartner",
+    "category": "tools-workflow",
+    "takeaways": [
+      "Autonomous agents can execute multi-step web construction: planning -> asset fetching -> coding -> browser testing.",
+      "Vibe coding vs Rigorous Agentic Engineering: Pair autonomous agents with automated unit tests and linter loops so code stays stable.",
+      "Use headless browsers (Playwright/Puppeteer) to verify UI states before human review."
+    ],
+    "code_snippet": """# Autonomous Agent Feedback Loop:
+# 1. Goal -> Agent plans files
+# 2. Agent writes code
+# 3. Background process runs `npm run build` or `pytest`
+# 4. Error output fed back to agent -> Agent self-corrects until 0 errors""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_018",
+    "shortcode": "DdjVi_lxhpn",
+    "title": "Day-Wise Placement Preparation Checklist (DSA + AI + Projects)",
+    "url": "https://www.instagram.com/reel/DdjVi_lxhpn/",
+    "creator": "placements",
+    "category": "interview-prep",
+    "takeaways": [
+      "The 3-Pillar Placement Strategy: DSA mastery, 1-2 Deep Projects with live demos, and Core CS Fundamentals (DBMS, OS, Networks).",
+      "Consistency over cramming: Check off 2 DSA problems daily (1 Medium + 1 revision) instead of solving 10 in one burst.",
+      "Project Defensibility: Be prepared to answer 'Why this database?' 'What happens if traffic doubles?' and 'What was your hardest bug?'"
+    ],
+    "code_snippet": """# Daily Placement Checklist:
+# [ ] 2 DSA Problems (Focus on Stacks, Trees, Sliding Window)
+# [ ] 1 System Design / Core CS Topic (OS Paging, DB Indexing, TCP vs UDP)
+# [ ] 45 Mins Project Engineering (Commit clean git commits to GitHub)
+# [ ] 15 Mins Mock Behavioral / Technical Explanation out loud""",
+    "language": "markdown",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_019",
+    "shortcode": "DaiXtfpItk9",
+    "title": "Tech Career Acceleration & High-Value Skill Stacking",
+    "url": "https://www.instagram.com/reel/DaiXtfpItk9/",
+    "creator": "pranavbytes",
+    "category": "interview-prep",
+    "takeaways": [
+      "Skill Stacking: Combining strong backend fundamentals with AI orchestration (LangChain, LlamaIndex, MCP) puts you in the top 5% of candidates.",
+      "Portfolio proof: A deployed project with actual latency metrics and architecture diagrams beats 5 generic tutorial clones every time.",
+      "Public Proof of Work: Document your code on GitHub with comprehensive READMEs and clean architectural explanations."
+    ],
+    "code_snippet": """# High-Value SWE Skill Stack in 2026:
+# 1. Core Systems: Go, Rust, or modern TypeScript
+# 2. Data & Concurrency: PostgreSQL + Redis + Kafka
+# 3. AI Orchestration: Function calling, Local LLMs (llama.cpp/vLLM), RAG
+# 4. Cloud & Infra: Docker, GitHub Actions CI/CD, Kubernetes basics""",
+    "language": "text",
+    "date_added": datetime.date.today().isoformat()
+  },
+  {
+    "id": "reel_020",
+    "shortcode": "Ddq-C4vPWiI",
+    "title": "Developer Tooling & Essential Cheat Sheets Hub",
+    "url": "https://www.instagram.com/reel/Ddq-C4vPWiI/",
+    "creator": "developerlife",
+    "category": "tools-workflow",
+    "takeaways": [
+      "Curate your own personalized developer vault instead of relying on transient social media bookmarks.",
+      "Keep quick-reference sheets for Git emergency commands (`git reflog`, `git reset --soft`, `git cherry-pick`).",
+      "Maintain a snippet library of frequently used regex patterns, SQL queries, and Docker compose templates."
+    ],
+    "code_snippet": """# Git Emergency Commands Every Dev Must Memorize:
+# Undo last commit but keep changes staged:
+git reset --soft HEAD~1
+
+# Recover "lost" commits or deleted branches:
+git reflog
+
+# Stash untracked files including .gitignore ignores:
+git stash -u""",
+    "language": "bash",
+    "date_added": datetime.date.today().isoformat()
+  }
+]
+
+with open(DATA_FILE, "w", encoding="utf-8") as f:
+    json.dump(enriched_data, f, indent=2, ensure_ascii=False)
+
+print(f"Updated {len(enriched_data)} reels with full technical content in {DATA_FILE}")
